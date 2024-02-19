@@ -1,0 +1,27 @@
+:root{
+    --roboto: "Roboto", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    font-family: var(--roboto);
+    box-sizing: border-box;
+}
+
+body{
+    position: relative;
+}
+
+header{
+    background: orange;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
