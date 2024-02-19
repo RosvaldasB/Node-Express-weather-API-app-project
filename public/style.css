@@ -13,6 +13,7 @@
 
 body{
     position: relative;
+    min-height: 100vh;
 }
 
 header{
@@ -24,4 +25,15 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+footer{
+    background-color: orange;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
