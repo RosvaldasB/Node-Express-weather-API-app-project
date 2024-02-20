@@ -35,8 +35,23 @@ app.post("/get-city", async (req, res) => {
                 appid: process.env.WEATHER_API,
             },
         })
-        console.log(weatherReport.data);
-        res.render("index.ejs");
+        const weatherData = weatherReport.data;
+        console.log(weatherData, weatherData.weather[0].main, weatherData.main.temp )
+        res.render("index.ejs", {
+            weatherCondition: weatherData.weather[0].description,
+            weatherIcon: weatherData.weather[0].icon,
+            mainData: weatherData.main,
+            visibility: weatherData.visibility,
+            wind: weatherData.wind,
+            cloudiness: weatherData.clouds.all,
+            rain: weatherData.rain,
+            snow: weatherData.snow,
+            sunrise: weatherData.sys.sunrise,
+            sunset: weatherData.sys.sunset,
+            country: weatherData.sys.country,
+            timezone: weatherData.timezone,
+            cityName: weatherData.name,
+        });
     } catch (error) {
         console.error("There was an error: ", error.message);
     }

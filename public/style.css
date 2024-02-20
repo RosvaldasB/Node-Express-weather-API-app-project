@@ -27,6 +27,14 @@ header{
     align-items: center;
 }
 
+main{
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    height: 100%;
+    flex: 1;
+}
+
 footer{
     background-color: orange;
     position: absolute;
