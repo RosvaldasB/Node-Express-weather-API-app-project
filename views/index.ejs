@@ -1,7 +1,25 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-    <h1> <%= cityName %>, <%= country %> </h1>
+    <% if (locals.info) { %>
+        <h1> <%= info.name %>, <%= info.sys.country %> </h1>
+        <p> <%= info.weather[0].description %> </p>
+        <p>
+            <%- JSON.stringify(info.main)  %>
+        </p>
+        <p> <%= info.wind.speed %>, <%= info.wind.deg %> </p>
+        <% if (!info.rain) { %>
+            <p> <%=  info.rain %> </p>
+        <% } %>
+        <% if (!info.snow) { %>
+            <p> <%=  info.snow %> </p>
+        <% } %>  
+    
+    
+    
+    <% } %>
+    
+
 </main>
 
 <%- include("partials/footer.ejs") %>
