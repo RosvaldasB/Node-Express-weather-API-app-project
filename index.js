@@ -16,9 +16,10 @@ app.get("/", (req, res) => {
     res.render("index.ejs");
 })
 
-app.post("/get-city", async (req, res) => {
+app.post("/weather-report", async (req, res) => {
     try{
         const requestCity = req.body.city;
+        const measurement = req.body.units;
         const cityData = await axios.get(LOCATION_URL, {
             params: {
                 q: req.body.city,
@@ -26,6 +27,33 @@ app.post("/get-city", async (req, res) => {
                 appid: process.env.WEATHER_API,
             }
         });
+
+        function measurementUnits(unit) {
+            let temp;
+            let atmos = "hPa";
+            let percent = "%";
+            let visibility = "m";
+            let windSpeed = "m/s";
+            let precipitation = "mm";
+            let deg = "°";
+            switch(unit){
+                case 'metric':
+                    temp = "°C";
+                    break;
+                case 'imperial':
+                    temp = "°F";
+                    windSpeed = "ft/s";
+                    break;
+            }
+            return { temp, windSpeed, atmos, percent, visibility, precipitation, deg };
+        }
+
+        function timeNormalizer(time, timeOffSet){
+            const date = new Date(time * 1000);
+            const localTime = new Date(date.getTime() + timeOffSet * 1000);
+            return localTime.toLocaleTimeString();
+        }
+
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
                 lat: cityData.data[0].lat,
@@ -36,22 +64,13 @@ app.post("/get-city", async (req, res) => {
             },
         })
         const weatherData = weatherReport.data;
-        console.log(weatherData, weatherData.weather[0].main, weatherData.main.temp )
+        console.log(weatherData)
+        // console.log("log", measurementUnits(measurement))
         res.render("index.ejs", {
-            info: weatherData
-            // weatherCondition: weatherData.weather[0].description,
-            // weatherIcon: weatherData.weather[0].icon,
-            // mainData: weatherData.main,
-            // visibility: weatherData.visibility,
-            // wind: weatherData.wind,
-            // cloudiness: weatherData.clouds.all,
-            // rain: weatherData.rain,
-            // snow: weatherData.snow,
-            // sunrise: weatherData.sys.sunrise,
-            // sunset: weatherData.sys.sunset,
-            // country: weatherData.sys.country,
-            // timezone: weatherData.timezone,
-            // cityName: weatherData.name,
+            info: weatherData,
+            unit: measurementUnits(measurement),
+            currentSunrise: timeNormalizer(weatherData.sys.sunrise, weatherData.timezone),
+            currentSunset: timeNormalizer(weatherData.sys.sunset, weatherData.timezone),
         });
     } catch (error) {
         console.error("There was an error: ", error.message);

@@ -12,36 +12,143 @@
 }
 
 body{
-    position: relative;
     min-height: 100vh;
+    width: 100%;
+    display: grid;
+    flex-direction: column;
+    grid-template-areas:
+    "header"
+    "main"
+    "footer";
+    grid-template-columns: auto;
+    grid-template-rows: 50px 1fr 50px;
 }
 
 header{
     background: orange;
-    position: absolute;
-    top: 0;
     width: 100%;
     height: 50px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    z-index: 2;
+    grid-area: "header";
+
 }
 
 main{
-    position: absolute;
+    grid-area: "main";
     display: flex;
-    /* height: 100%; */
-    margin: 50px 0;
-    flex: 1;
+    align-items: center;
+    justify-content: center;
 }
 
 footer{
     background-color: orange;
-    position: absolute;
-    bottom: 0;
     height: 50px;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    grid-area: "footer";
+}
+
+/* main components */
+
+main .container {
+    width: 90%;
+    height: 90%;
+    border: 1px solid black;
+}
+
+.weather-report-div {
+    width: 400px;
+}
+
+main .container > div {
+    border: 1px solid red;
+}
+
+.info-header{
+    text-align: center;
+    position: relative;
+}
+
+.main-info{
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.weather-condition{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-condition .weather-condition-description{
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* compass */
+
+.conditions-wind{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+}
+
+.compass{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.north{
+    font-size: 12px;
+}
+
+.pointer{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pointer img{
+    position: absolute;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.wind{
+    margin-left: 10px;
+}
+
+.wind .deg{
+    margin-bottom: 5px;
+}
+
+.main-temp{
+    display: flex;
+    flex-direction: row;
+}
+
+/* temperature */
+
+.introduction{
+    display: flex;
+    border: 1px solid black;
     align-items: center;
     justify-content: center;
 }
