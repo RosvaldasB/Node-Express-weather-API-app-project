@@ -64,7 +64,19 @@
                         
 
                 </div>
+                <div class="">
 
+                </div>
+                    <% forecast.forEach((timeStamp, index) => { %>
+                        
+                        <p><%= forecast[index].time %></p>
+                        <img src="https://openweathermap.org/img/wn/<%= forecast[index].conditionImg %>@2x.png" alt=<%= forecast[index].condition %>>
+                        <p><%= forecast[index].condition %></p>
+                        <p><%= forecast[index].cloudiness %></p>
+                        <p><%= forecast[index].windSpeed %></p>
+                        <p><%= forecast[index].windDirection %></p>
+                        <p><%= forecast[index].txt %></p>
+                    <% }); %>
             </div>
         <% } else { %>
             <div class="introduction">

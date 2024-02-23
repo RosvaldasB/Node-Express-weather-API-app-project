@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
 import * as dotenv from "dotenv";
+import { measurementUnits, timeNormalizer, timeNormalizerNoOffSet, windDegInterpretator } from "./functions.js";
 
 const app = express();
 const port = 3000;
@@ -11,6 +12,7 @@ dotenv.config();
 
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct";
+const FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
 
 app.get("/", (req, res) => {
     res.render("index.ejs");
@@ -28,32 +30,6 @@ app.post("/weather-report", async (req, res) => {
             }
         });
 
-        function measurementUnits(unit) {
-            let temp;
-            let atmos = "hPa";
-            let percent = "%";
-            let visibility = "m";
-            let windSpeed = "m/s";
-            let precipitation = "mm";
-            let deg = "°";
-            switch(unit){
-                case 'metric':
-                    temp = "°C";
-                    break;
-                case 'imperial':
-                    temp = "°F";
-                    windSpeed = "ft/s";
-                    break;
-            }
-            return { temp, windSpeed, atmos, percent, visibility, precipitation, deg };
-        }
-
-        function timeNormalizer(time, timeOffSet){
-            const date = new Date(time * 1000);
-            const localTime = new Date(date.getTime() + timeOffSet * 1000);
-            return localTime.toLocaleTimeString();
-        }
-
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
                 lat: cityData.data[0].lat,
@@ -64,13 +40,47 @@ app.post("/weather-report", async (req, res) => {
             },
         })
         const weatherData = weatherReport.data;
+
+        const forecast = await axios.get(FORECAST_URL, {
+            params:{
+                lat: cityData.data[0].lat,
+                lon: cityData.data[0].lon,
+                units: req.body.units,
+                lang: req.body.lang,
+                cnt: 7,
+                appid: process.env.WEATHER_API,
+            }
+        })
+
+        const forecastData = forecast.data.list;
+
+        const futureForecasts = [];
+        for(let i = 0; i < 7; i++){
+            let hourForecast = {
+            time: timeNormalizerNoOffSet(forecastData[i].dt),
+            conditionImg: forecastData[i].weather[0].icon,
+            condition: forecastData[i].weather[0].description,
+            cloudiness: forecastData[i].clouds.all,
+            windSpeed: forecastData[i].wind.speed,
+            windDirection: windDegInterpretator(forecastData[i].wind.deg),
+            txt: forecastData[i].dt_txt,
+            };
+            futureForecasts.push(hourForecast);
+        }
+
+
+
+        // 
+
         console.log(weatherData)
-        // console.log("log", measurementUnits(measurement))
+        console.log('kefir', forecastData[1])
         res.render("index.ejs", {
             info: weatherData,
             unit: measurementUnits(measurement),
             currentSunrise: timeNormalizer(weatherData.sys.sunrise, weatherData.timezone),
             currentSunset: timeNormalizer(weatherData.sys.sunset, weatherData.timezone),
+            forecast: futureForecasts,
+            // forecast: forecastData,
         });
     } catch (error) {
         console.error("There was an error: ", error.message);
