@@ -13,6 +13,8 @@ dotenv.config();
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct";
 const FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
+const WALLPAPER_URL = "https://api.unsplash.com/search/photos";
+// ?query=vilnius";
 
 app.get("/", (req, res) => {
     res.render("index.ejs");
@@ -30,6 +32,16 @@ app.post("/weather-report", async (req, res) => {
             }
         });
 
+        // const wallpaper = await axios.get(WALLPAPER_URL, {
+        //     params: {
+        //         query: requestCity,
+        //         client_id: process.env.UNPLASH_ACCESS,
+        //         per_page: 1,
+        //     },
+        // });
+
+        // const wallpaperData = wallpaper.data.results[0].urls.raw;
+
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
                 lat: cityData.data[0].lat,
@@ -39,6 +51,7 @@ app.post("/weather-report", async (req, res) => {
                 appid: process.env.WEATHER_API,
             },
         })
+
         const weatherData = weatherReport.data;
 
         const forecast = await axios.get(FORECAST_URL, {
@@ -60,27 +73,28 @@ app.post("/weather-report", async (req, res) => {
             time: timeNormalizerNoOffSet(forecastData[i].dt),
             conditionImg: forecastData[i].weather[0].icon,
             condition: forecastData[i].weather[0].description,
+            temp: forecastData[i].main.temp,
             cloudiness: forecastData[i].clouds.all,
             windSpeed: forecastData[i].wind.speed,
             windDirection: windDegInterpretator(forecastData[i].wind.deg),
-            txt: forecastData[i].dt_txt,
+            windDirectionArrow: forecastData[i].wind.deg,
+            rain: forecastData[i].rain,
+            snow: forecastData[i].snow,
             };
             futureForecasts.push(hourForecast);
         }
 
-
-
-        // 
-
-        console.log(weatherData)
-        console.log('kefir', forecastData[1])
+        // console.log(weatherData)
+        // console.log('kefir', forecastData[1])
         res.render("index.ejs", {
+            cityTitle: " - " + weatherData.name,
             info: weatherData,
             unit: measurementUnits(measurement),
             currentSunrise: timeNormalizer(weatherData.sys.sunrise, weatherData.timezone),
             currentSunset: timeNormalizer(weatherData.sys.sunset, weatherData.timezone),
             forecast: futureForecasts,
-            // forecast: forecastData,
+            currentWindDirection: windDegInterpretator(weatherData.wind.deg),
+            // wallpaperBg: wallpaperData,
         });
     } catch (error) {
         console.error("There was an error: ", error.message);

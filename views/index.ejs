@@ -1,89 +1,106 @@
 <%- include("partials/header.ejs") %>
 
 <main>
-    <div class="container">
-        <% if (locals.info) { %>
-            <div class="weather-report-div">
-                <div class="info-header">
-                    <h1> <%= info.name %>, <%= info.sys.country %> </h1>
+    
+    <% if (locals.info) { %>
+    <div class="container">    
+        <div class="weather-report-div">
+            <div class="info-header">
+                <h1> <%= info.name %>, <%= info.sys.country %> </h1>
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="info-body">
+                <div class="main-info">
+                    <div class="weather-condition">
+                        <img src="https://openweathermap.org/img/wn/<%= info.weather[0].icon %>@2x.png" alt=<%= info.weather[0].description %>>
+                        <p> <%= info.weather[0].description %> <% if(info.clouds.all != 0) {%>
+                            <span>(<%= info.clouds.all %><%= unit.percent %>)</span>
+                        <% } %> </p>
+                    </div>
+                    <div class="wind">
+                        <p><img style="width: 12px; transform: rotate( <%= info.wind.deg%>deg )" src="https://www.svgrepo.com/show/52695/down-arrow.svg" alt="wind direction arrow">   <%= currentWindDirection%></p>
+                        <p class="wind-speed"><%= info.wind.speed %><%= unit.windSpeed%></p>
+                    </div>
                 </div>
-            <div class="main-info">
-                <div class="weather-condition">
-                    <img src="https://openweathermap.org/img/wn/<%= info.weather[0].icon %>@2x.png" alt=<%= info.weather[0].description %>>
-                    <div class="weather-condition-description">
-                        <p> <%= info.weather[0].description %> </p>
-                        <% if(info.clouds.all != 0) {%>
-                            <p> <%= info.clouds.all %><%= unit.percent %> </p>
+
+                <div class="sunrise-sunshine">
+                    <div class="sunrise">
+                        <p>Sunrise: <%= currentSunrise %></p>
+                    </div>
+                    <div class="sunset">
+                            <p>Sunset: <%= currentSunset %></p>
+                    </div>
+                </div>
+                
+
+                <div class="base-info">
+                    <div class="temp">
+                        <p class="data-number"><%= info.main.temp%><%= unit.temp%></p>
+                        <p class="title">Temperature</p>
+                    </div>
+                    <div class="humidity">
+                        <p class="data-number"><%= info.main.humidity %><%= unit.percent %></p>
+                        <p class="title">Humidity</p>
+                    </div>
+                    <div class="rain">
+                        <% if (info.rain) { %>
+                            <p class="data-number"><%=info.rain['1h']%><%= unit.precipitation %></p>
+                            <p class="title">Rain precipitation</p>
+                        <% } else { %>
+                            <p class="data-number-none">No rain in the past hour.</p>
+                            <p class="title">Rain precipitation</p>
+                        <% } %>
+                    </div>
+                    <div class="snow">
+                        <% if (info.snow) { %>
+                            <p class="data-number"><%=info.snow['1h'] %><%= unit.precipitation %></p>
+                            <p class="title">Snow precipitation</p>
+                        <% } else { %>
+                            <p class="data-number-none">No snow in the past hour.</p>
+                            <p class="title">Snow precipitation</p>
                         <% } %>  
                     </div>
                     
                 </div>
-                
-                <div class="conditions-wind">
-                    <div class="compass">
-                        <div class="north">- N -</div>
-                        <div class="pointer"><img style="transform: rotate( <%= info.wind.deg%>deg )" src="https://www.svgrepo.com/show/52695/down-arrow.svg" alt="wind direction arrow"></p></div>
-                    </div>
-                    <div class="wind">
-                        <p class="deg"><%= info.wind.deg %><%= unit.deg %></p>
-                        <p class="wind-speed"><%= info.wind.speed %><%= unit.windSpeed%></p>
-                    </div>
-                </div>
             </div>
-                
+        </div>
 
+        <div class="seperator"></div>
 
-                <div class="sunrise">
-                    <p>Sunrise: <%= currentSunrise %></p>
+        <div class="future-forecast-container">
+            <% forecast.forEach((timeStamp, index) => { %>
+                <div class="hour-forecast-container">
+                    <p><%= forecast[index].time %></p>
+                    <img src="https://openweathermap.org/img/wn/<%= forecast[index].conditionImg %>@2x.png" alt=<%= forecast[index].condition %>>
+                    <p><%= forecast[index].condition %></p>
+                    <p><%= forecast[index].temp %><%= unit.temp %></p>
+                    <p><%= forecast[index].cloudiness %><%= unit.percent %></p>
+                    <p><%= forecast[index].windSpeed %><%= unit.windSpeed %></p>
+                    <p><img style="width: 12px;transform: rotate( <%= forecast[index].windDirectionArrow%>deg )" src="https://www.svgrepo.com/show/52695/down-arrow.svg" alt="wind direction arrow">   <%= forecast[index].windDirection %></p>
+                    <% if(!forecast[index].rain){ %>
+                        <p>No rain.</p>
+                    <% } else { %>
+                        <p><%= forecast[index].rain['3h'] %><%= unit.precipitation %></p>
+                    <% } %>
+                    <% if(!forecast[index].snow){ %>
+                        <p>No snow.</p>
+                    <% } else { %>
+                        <p><%= forecast[index].snow['3h'] %><%= unit.precipitation %></p>
+                    <% } %>
                 </div>
-
-                <div class="sunset">
-                        <p>Sunset: <%= currentSunset %></p>
-                </div>
-                <div class="main-temp">
-
-                        
-
-                        <div class="base-info">
-                            <p> Temperature: <%= info.main.temp %><%= unit.temp %> </p>  
-                            <p> Temperature(felt): <%= info.main.feels_like %><%= unit.temp %> </p> 
-                            <p> Pressure: <%= info.main.pressure %><%= unit.atmos %> </p> 
-                            <p> Humidity: <%= info.main.humidity %><%= unit.percent %> </p> 
-                            <% if (info.rain) { %>
-                                <p>Rain precipitation in the last hour: <%=info.rain['1h']%><%= unit.precipitation %></p>
-                            <% } else { %>
-                                <p>No rain in the past hour.</p>
-                            <% } %>
-                            <% if (info.snow) { %>
-                            <p>Snow precipitation in the last hour: <%=info.snow['1h'] %><%= unit.precipitation %></p>
-                            <% } else { %>
-                                <p>No snow in the past hour.</p>
-                            <% } %>
-                        </div>
-                        
-                        
-
-                </div>
-                <div class="">
-
-                </div>
-                    <% forecast.forEach((timeStamp, index) => { %>
-                        
-                        <p><%= forecast[index].time %></p>
-                        <img src="https://openweathermap.org/img/wn/<%= forecast[index].conditionImg %>@2x.png" alt=<%= forecast[index].condition %>>
-                        <p><%= forecast[index].condition %></p>
-                        <p><%= forecast[index].cloudiness %></p>
-                        <p><%= forecast[index].windSpeed %></p>
-                        <p><%= forecast[index].windDirection %></p>
-                        <p><%= forecast[index].txt %></p>
-                    <% }); %>
-            </div>
-        <% } else { %>
-            <div class="introduction">
-                <p>Welcome please input your desired location to get your current weather report.</p>
-            </div>
-        <% } %>
+            <% }); %>
+        </div>
+                    
+    </div>        
+    <% } else { %>
+    <div class="introduction">
+        <h1>Welcome to Weather Buddy!</h1>
+        <p>Enter your location and get your weather forecast currently and the nest 24 hours!</p>
     </div>
+    <% } %>
+    
 </main>
 
 <%- include("partials/footer.ejs") %>
