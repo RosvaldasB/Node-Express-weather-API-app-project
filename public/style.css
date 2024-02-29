@@ -55,6 +55,81 @@ footer{
     grid-area: "footer";
 }
 
+/* header and nav */
+
+header .logo{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 2.2rem;
+    transition: all 300ms ease-in-out;
+}
+
+header .logo:hover{
+    text-decoration: underline;
+    color: black;
+}
+
+header .logo-slogan {
+    font-size: 1.2rem;
+}
+
+.search-field input[type="text"] {
+    width: 125px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    padding: 5px 5px;
+    font-weight: 500;
+    color: white;
+    text-transform: uppercase;
+    font-size: 17px;
+    text-align: center;
+}
+
+.search-field select[name="units"]{
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+    padding: 5px 2px;
+}
+
+.search-field select[name="units"]:active{
+    border: 1px solid black;
+    background: black;
+    color: white;
+}
+
+.search-field select[name="lang"]{
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+    padding: 5px 2px;
+}
+
+.search-field select[name="lang"]:active{
+    border: 1px solid black;
+    background: black;
+    color: white;
+}
+
+.search-field input[type="submit"]{
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+    padding: 5px 2px;
+}
+
+.search-field input[type="submit"]:active{
+    border: 1px solid black;
+    background: black;
+    color: white;
+}
+
 /* main components */
 
 main .container {
@@ -152,6 +227,16 @@ main .container {
     margin-bottom: 5px;
 }
 
+.air-quality{
+    text-align: center;
+}
+.quality-value{
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 /* future weather styling */
 
 .future-forecast-container{
@@ -187,4 +272,21 @@ main .container {
 .introduction h1{
     margin-bottom: 30px;
     font-size: 50px;
+}
+
+footer .container p {
+    color: white;
+    font-weight: 600;
+}
+
+footer .container p a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 300ms ease-in-out;
+}
+
+footer .container p a:hover {
+    color: black;
+    text-decoration: underline;
 }

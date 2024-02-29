@@ -62,3 +62,22 @@ export function windDegInterpretator(deg){
 
     return windDirection;
 }
+
+// function that takes in air quality index and returns a simple result(good,)
+
+export function airQuality(value){
+    let aircondition;
+    if(value === 1){
+        aircondition = "good";
+    } else if (value === 2){
+        aircondition = "fair";
+    } else if (value === 3){
+        aircondition = "moderate";
+    } else if (value === 4){
+        aircondition = "poor";
+    } else if (value === 5){
+        aircondition = "very poor";
+    }
+
+    return aircondition;
+}

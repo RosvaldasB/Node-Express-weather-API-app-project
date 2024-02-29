@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
 import * as dotenv from "dotenv";
-import { measurementUnits, timeNormalizer, timeNormalizerNoOffSet, windDegInterpretator } from "./functions.js";
+import { measurementUnits, timeNormalizer, timeNormalizerNoOffSet, windDegInterpretator, airQuality } from "./functions.js";
 
 const app = express();
 const port = 3000;
@@ -13,8 +13,8 @@ dotenv.config();
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct";
 const FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
-const WALLPAPER_URL = "https://api.unsplash.com/search/photos";
-// ?query=vilnius";
+// const WALLPAPER_URL = "https://api.unsplash.com/search/photos";
+const POLUTION_URL = "http://api.openweathermap.org/data/2.5/air_pollution/forecast";
 
 app.get("/", (req, res) => {
     res.render("index.ejs");
@@ -41,6 +41,18 @@ app.post("/weather-report", async (req, res) => {
         // });
 
         // const wallpaperData = wallpaper.data.results[0].urls.raw;
+
+        const polution = await axios.get(POLUTION_URL, {
+            params: {
+                lat: cityData.data[0].lat,
+                lon: cityData.data[0].lon,
+                appid: process.env.WEATHER_API,
+            },
+        });
+
+        const polutionData = polution.data.list[0].main.aqi;
+
+        // console.log(polutionData, airQuality(polutionData));
 
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
@@ -84,8 +96,6 @@ app.post("/weather-report", async (req, res) => {
             futureForecasts.push(hourForecast);
         }
 
-        // console.log(weatherData)
-        // console.log('kefir', forecastData[1])
         res.render("index.ejs", {
             cityTitle: " - " + weatherData.name,
             info: weatherData,
@@ -94,6 +104,7 @@ app.post("/weather-report", async (req, res) => {
             currentSunset: timeNormalizer(weatherData.sys.sunset, weatherData.timezone),
             forecast: futureForecasts,
             currentWindDirection: windDegInterpretator(weatherData.wind.deg),
+            airQuality: airQuality(polutionData),
             // wallpaperBg: wallpaperData,
         });
     } catch (error) {

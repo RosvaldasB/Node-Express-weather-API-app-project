@@ -62,7 +62,10 @@
                             <p class="title">Snow precipitation</p>
                         <% } %>  
                     </div>
-                    
+                </div>
+                <div class="air-quality">
+                    <p class="quality-value"><%= airQuality %></p>
+                    <p class="title">Air Quality</p>
                 </div>
             </div>
         </div>
@@ -92,13 +95,13 @@
                 </div>
             <% }); %>
         </div>
-                    
+
     </div>        
     <% } else { %>
-    <div class="introduction">
-        <h1>Welcome to Weather Buddy!</h1>
-        <p>Enter your location and get your weather forecast currently and the nest 24 hours!</p>
-    </div>
+        <div class="introduction">
+            <h1>Welcome to Weather Buddy!</h1>
+            <p>Enter your location and get your weather forecast currently and the nest 24 hours!</p>
+        </div>
     <% } %>
     
 </main>
