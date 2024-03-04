@@ -98,10 +98,42 @@
 
     </div>        
     <% } else { %>
-        <div class="introduction">
+    
+    <div class="introduction">
+        <div class="main-introduction-div">
             <h1>Welcome to Weather Buddy!</h1>
             <p>Enter your location and get your weather forecast currently and the nest 24 hours!</p>
         </div>
+        <div class="quick-load">
+            <h2>Or use these <img src="https://www.svgrepo.com/show/491565/arrow-turn-right-down.svg" alt="down-arrow" class="down-direction-arrow"></h2>
+            <form action="/weather-report" method="post" class="quick-load-form">
+                <input type="submit" name="city" value="London">
+                <input type="submit" name="city" value="Berlin">
+                <input type="submit" name="city" value="Moscow">
+                <input type="submit" name="city" value="Warsaw">
+                <input type="submit" name="city" value="Vilnius">
+                <input type="submit" name="city" value="Vienna">
+                <input type="submit" name="city" value="Ankara">
+                <input type="submit" name="city" value="Beijing">
+                <input type="submit" name="city" value="Washington">
+                <input type="submit" name="city" value="Paris">
+                <input type="submit" name="city" value="Rome">
+                <input type="submit" name="city" value="Madrid">
+                <input type="submit" name="city" value="Riga">
+                <input type="submit" name="city" value="Tallinn">
+                <input type="submit" name="city" value="Stockholm">
+                <input type="submit" name="city" value="Helsinki">
+                <input type="submit" name="city" value="Copenhagen">
+                <input type="submit" name="city" value="Bucharest">
+                <input type="submit" name="city" value="Minsk">
+                <input type="submit" name="city" value="Kyiv">
+                <input type="submit" name="city" value="Tokyo">
+                <input type="submit" name="city" value="Cairo">
+                <input type="submit" name="city" value="Abu Dhabi">
+                <input type="submit" name="city" value="Ontario">
+            </form>
+        </div>
+    </div>
     <% } %>
     
 </main>

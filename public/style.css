@@ -32,7 +32,7 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 2;
+    z-index: 4;
     grid-area: "header";
 
 }
@@ -51,7 +51,7 @@ footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    z-index: 4;
     grid-area: "footer";
 }
 
@@ -74,60 +74,78 @@ header .logo-slogan {
     font-size: 1.2rem;
 }
 
+.form{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-div{
+    position: relative;
+}
+
+.city-label{
+    font-size: 12px;
+    position: absolute;
+    bottom: 17px;
+    left: 5px;
+    background: orange;
+}
+
 .search-field input[type="text"] {
+    /* position: absolute; */
     width: 125px;
     background: transparent;
-    border: none;
-    border-bottom: 1px solid black;
     outline: none;
-    padding: 5px 5px;
-    font-weight: 500;
-    color: white;
-    text-transform: uppercase;
-    font-size: 17px;
-    text-align: center;
+    border: 1px solid black;
+    padding: 3px;
 }
 
 .search-field select[name="units"]{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border: none;
     border-radius: 10px;
     background: white;
     text-align: center;
     padding: 5px 2px;
+    transition: all 200ms ease-in-out;
 }
 
-.search-field select[name="units"]:active{
-    border: 1px solid black;
+.search-field select[name="units"]:focus, .search-field select[name="units"]:hover{
+    /* border: 1px solid black; */
     background: black;
     color: white;
 }
 
 .search-field select[name="lang"]{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border: none;
     border-radius: 10px;
     background: white;
     text-align: center;
     padding: 5px 2px;
 }
 
-.search-field select[name="lang"]:active{
-    border: 1px solid black;
+.search-field select[name="lang"]:focus, .search-field select[name="lang"]:hover{
+    /* border: 1px solid black; */
     background: black;
     color: white;
 }
 
 .search-field input[type="submit"]{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 10px;
     background: white;
     text-align: center;
     padding: 5px 2px;
+    border: none;
 }
 
-.search-field input[type="submit"]:active{
-    border: 1px solid black;
+.search-field input[type="submit"]:focus, .search-field input[type="submit"]:hover{
+    /* border: 1px solid black; */
     background: black;
     color: white;
+    border: none;
 }
 
 /* main components */
@@ -137,7 +155,7 @@ main .container {
     height: 95%;
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 15px;
 }
 
@@ -266,12 +284,67 @@ main .container {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    place-self: center center;
+    z-index: 3;
+    position: relative;
 }
 
-.introduction h1{
+.main-introduction-div{
+    background: url(./images/collage-introduction-min.jpg);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-introduction-div h1{
     margin-bottom: 30px;
-    font-size: 50px;
+    font-size: 120px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.main-introduction-div p{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 50;
+}
+
+.down-direction-arrow{
+    width: 15px;
+    height: 15px;
+}
+
+.quick-load{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.quick-load h2{
+    margin: 20px 0 35px;
+}
+
+.quick-load-form{
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: auto;
+    gap: 30px 100px;
+}
+
+.quick-load-form input{
+    width: 130px;
+    height: 30px;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+}
+
+.quick-load input:hover{
+    background: lightgray;
+    border-radius: 15px;
 }
 
 footer .container p {

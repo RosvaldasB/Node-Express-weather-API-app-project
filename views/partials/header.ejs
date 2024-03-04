@@ -12,13 +12,18 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
-    <!-- <style>
+    <style>
         main{
-            background-image: url( <%# wallpaperBg %> );
             background-position: center;
-            background-repeat: round;
+            background-size: cover;
+            background-repeat: no-repeat;
+            <% if(locals.wallpaperBg) { %>
+                background-image: url( <%= wallpaperBg %> );
+            <% } else { %>
+                background-image: none;
+            <% }; %>
         } 
-    </style> -->
+    </style>
     <title>Weather Buddy <%= locals.cityTitle %> </title>
 </head>
 <body>
@@ -27,8 +32,11 @@
             <a href="/" class="logo">Weather Buddy <span class="logo-slogan">- Your trusted weather companion!</span></a>
         </div>
         <div class="search-field">
-            <form action="/weather-report" method="post">
-                <input type="text" name="city" class="search-field">
+            <form action="/weather-report" method="post" class="form">
+                <div class="search-div">
+                    <label class="city-label" for="city">Enter city</label>
+                    <input type="text" name="city" class="search-field">
+                </div>
                 <select name="units" class="unit-select">
                     <option name="imperial" value="imperial">Imperial</option>
                     <option name="metric" value="metric" selected>Metric</option>

@@ -13,7 +13,7 @@ dotenv.config();
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct";
 const FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
-// const WALLPAPER_URL = "https://api.unsplash.com/search/photos";
+const WALLPAPER_URL = "https://api.unsplash.com/search/photos";
 const POLUTION_URL = "http://api.openweathermap.org/data/2.5/air_pollution/forecast";
 
 app.get("/", (req, res) => {
@@ -32,15 +32,15 @@ app.post("/weather-report", async (req, res) => {
             }
         });
 
-        // const wallpaper = await axios.get(WALLPAPER_URL, {
-        //     params: {
-        //         query: requestCity,
-        //         client_id: process.env.UNPLASH_ACCESS,
-        //         per_page: 1,
-        //     },
-        // });
+        const wallpaper = await axios.get(WALLPAPER_URL, {
+            params: {
+                query: requestCity,
+                client_id: process.env.UNPLASH_ACCESS,
+                per_page: 1,
+            },
+        });
 
-        // const wallpaperData = wallpaper.data.results[0].urls.raw;
+        const wallpaperData = wallpaper.data.results[0].urls.small;
 
         const polution = await axios.get(POLUTION_URL, {
             params: {
@@ -51,8 +51,6 @@ app.post("/weather-report", async (req, res) => {
         });
 
         const polutionData = polution.data.list[0].main.aqi;
-
-        // console.log(polutionData, airQuality(polutionData));
 
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
@@ -105,7 +103,7 @@ app.post("/weather-report", async (req, res) => {
             forecast: futureForecasts,
             currentWindDirection: windDegInterpretator(weatherData.wind.deg),
             airQuality: airQuality(polutionData),
-            // wallpaperBg: wallpaperData,
+            wallpaperBg: wallpaperData,
         });
     } catch (error) {
         console.error("There was an error: ", error.message);
