@@ -13,7 +13,6 @@
 
 body{
     min-height: 100vh;
-    width: 100%;
     display: grid;
     flex-direction: column;
     grid-template-areas:
@@ -21,14 +20,14 @@ body{
     "main"
     "footer";
     grid-template-columns: auto;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 75px 1fr 50px;
     font-size: 16px;
 }
 
 header{
     background: orange;
     width: 100%;
-    height: 50px;
+    height: 75px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -55,7 +54,9 @@ footer{
     grid-area: "footer";
 }
 
-/* header and nav */
+/* ************ */
+/* header part */
+/* ********** */
 
 header .logo{
     text-decoration: none;
@@ -70,9 +71,20 @@ header .logo:hover{
     color: black;
 }
 
+.logo-mob{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 2.2rem;
+    transition: all 300ms ease-in-out;
+    display: none;
+}
+
 header .logo-slogan {
     font-size: 1.2rem;
 }
+
+/* header form */
 
 .form{
     display: flex;
@@ -93,7 +105,6 @@ header .logo-slogan {
 }
 
 .search-field input[type="text"] {
-    /* position: absolute; */
     width: 125px;
     background: transparent;
     outline: none;
@@ -102,7 +113,6 @@ header .logo-slogan {
 }
 
 .search-field select[name="units"]{
-    /* border: 1px solid black; */
     border: none;
     border-radius: 10px;
     background: white;
@@ -112,13 +122,11 @@ header .logo-slogan {
 }
 
 .search-field select[name="units"]:focus, .search-field select[name="units"]:hover{
-    /* border: 1px solid black; */
     background: black;
     color: white;
 }
 
 .search-field select[name="lang"]{
-    /* border: 1px solid black; */
     border: none;
     border-radius: 10px;
     background: white;
@@ -127,13 +135,11 @@ header .logo-slogan {
 }
 
 .search-field select[name="lang"]:focus, .search-field select[name="lang"]:hover{
-    /* border: 1px solid black; */
     background: black;
     color: white;
 }
 
 .search-field input[type="submit"]{
-    /* border: 1px solid black; */
     border-radius: 10px;
     background: white;
     text-align: center;
@@ -142,13 +148,14 @@ header .logo-slogan {
 }
 
 .search-field input[type="submit"]:focus, .search-field input[type="submit"]:hover{
-    /* border: 1px solid black; */
     background: black;
     color: white;
     border: none;
 }
 
-/* main components */
+/* ****************************************************** */
+/* Main(weather data presentation and introduction parts)*/
+/* **************************************************** */
 
 main .container {
     width: 80%;
@@ -192,7 +199,6 @@ main .container {
     width: 60%;
     margin: 30px 0 15px 0;
 }
-
 .main-info{
     display: flex;
     align-items: center;
@@ -200,22 +206,18 @@ main .container {
     flex-direction: column;
     font-size: 1.125rem;
 }
-
 .weather-condition{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
-
-
 .conditions-wind{
     display: flex;
     align-items: center;
     flex-direction: column;
     text-align: center;
 }
-
 .wind{
     display: flex;
     align-items: center;
@@ -224,7 +226,6 @@ main .container {
     margin-top: 10px;
     font-size: 1.125rem;
 }
-
 .base-info{
     display: grid;
     grid-template-columns: auto auto;
@@ -232,19 +233,16 @@ main .container {
     gap: 25px;
     text-align: center;
 }
-
 .data-number{
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px;
 }
-
 .data-number-none{
     font-weight: lighter;
     font-style: italic;
     margin-bottom: 5px;
 }
-
 .air-quality{
     text-align: center;
 }
@@ -261,9 +259,9 @@ main .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    flex-wrap: wrap;
+    gap: 25px;
 }
-
 .hour-forecast-container {
     display: flex;
     flex-direction: column;
@@ -272,65 +270,57 @@ main .container {
     text-align: center;
     gap: 7px;
 }
-
 .hour-forecast-container:hover{
     background-color: rgba(0, 0, 0, 0.25);
 }
 
+/* introduction part */
+
 .introduction{
     display: flex;
-    height: 50%;
-    width: 50%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 3;
     position: relative;
 }
-
 .main-introduction-div{
     background: url(./images/collage-introduction-min.jpg);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .main-introduction-div h1{
     margin-bottom: 30px;
     font-size: 120px;
     text-align: center;
     font-weight: 900;
 }
-
 .main-introduction-div p{
     text-align: center;
     font-size: 30px;
     font-weight: 50;
 }
-
 .down-direction-arrow{
     width: 15px;
     height: 15px;
 }
-
 .quick-load{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     margin-top: 20px;
+    max-width: calc(100%);
 }
-
 .quick-load h2{
     margin: 20px 0 35px;
 }
-
 .quick-load-form{
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: auto auto auto;
     grid-template-rows: auto;
     gap: 30px 100px;
 }
-
 .quick-load-form input{
     width: 130px;
     height: 30px;
@@ -341,25 +331,145 @@ main .container {
     cursor: pointer;
     transition: all 200ms ease-in-out;
 }
-
 .quick-load input:hover{
     background: lightgray;
     border-radius: 15px;
 }
 
+/* footer */
+
 footer .container p {
     color: white;
     font-weight: 600;
 }
-
 footer .container p a {
     color: white;
     font-weight: 600;
     text-decoration: none;
     transition: all 300ms ease-in-out;
 }
-
 footer .container p a:hover {
     color: black;
     text-decoration: underline;
+}
+
+/* ****************************************** */
+/* mobile/tablet responsive design beginning */
+/* **************************************** */
+
+@media only screen and (max-width: 768px) {
+    
+    header{
+        height: auto;
+    }
+
+    body{
+       grid-template-rows: 75px auto 50px; 
+    }
+
+    /* mobile/tablet responsive design for logo and inputs */
+    
+    .logo{
+        display: none;
+    }
+
+    .logo-mob{
+        display: inline-flex;
+    }
+
+    .form{
+        display: grid;
+        grid-template-columns: 62px 62px 75px;
+        grid-template-rows: 30px;
+        grid-template-areas: 
+        "search search button"
+        "unit lang button";
+        gap: 3px;
+    }
+
+    .form .search-field{
+        grid-area: search;
+    }
+
+    .city-label{
+        font-size: 12px;
+        position: absolute;
+        bottom: 23px;
+        left: 4px;
+        background: orange;
+    }
+
+    .form .unit-select{
+        grid-area: unit;
+    }
+
+    .form .lang-select{
+        grid-area: lang;
+    }
+
+    .form input[type="submit"]{
+        grid-area: button;
+        min-height: 100%;
+    }
+
+    /* mobile/tablet responsive design for introduction part (main part before entering city name) */
+
+    .main-introduction-div{
+        min-width: 100%;
+    }
+
+    .main-introduction-div h1{
+        font-size: 60px;
+    }
+    
+    .introduction{
+        width: 100%;
+    }
+
+    .quick-load-form{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: unset;
+        gap: 10px;
+        margin-bottom: 50px;
+    }
+
+    /* mobile/tablet responsive design for main weather data presentation */
+
+    #main-frame{
+        width: 80%;
+        min-height: 90%;
+        margin: 50px 0;
+    }
+
+    .weather-report-div{
+        margin-bottom: 30px;
+    }
+
+    .info-body{
+        flex-direction: column;
+    }
+
+    .main-info, .sunrise-sunset, .base-info{
+        margin-bottom: 20px;
+    }
+
+    .sunrise-sunset{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .dayTime{
+        font-weight: 500;
+    }
+
+    .seperator{
+        border: 1px solid black;
+    }
+
+    .future-forecast-container{
+        margin: 30px 0;
+    }
 }

@@ -24,6 +24,9 @@ app.post("/weather-report", async (req, res) => {
     try{
         const requestCity = req.body.city;
         const measurement = req.body.units;
+
+        // Using Axios to use form data of a city and turning it into coordinates for different uses.
+
         const cityData = await axios.get(LOCATION_URL, {
             params: {
                 q: req.body.city,
@@ -31,6 +34,9 @@ app.post("/weather-report", async (req, res) => {
                 appid: process.env.WEATHER_API,
             }
         });
+
+        // Using axios to get wallpapers when getting city data, and the background
+        // displaying background images related to the searched city.
 
         const wallpaper = await axios.get(WALLPAPER_URL, {
             params: {
@@ -42,6 +48,9 @@ app.post("/weather-report", async (req, res) => {
 
         const wallpaperData = wallpaper.data.results[0].urls.small;
 
+        // get polution data from API using axios, detailed data or simple (1-5) evaluation
+        // for how good is the air quality
+
         const polution = await axios.get(POLUTION_URL, {
             params: {
                 lat: cityData.data[0].lat,
@@ -51,6 +60,8 @@ app.post("/weather-report", async (req, res) => {
         });
 
         const polutionData = polution.data.list[0].main.aqi;
+
+        // Using axios to get current weather data
 
         const weatherReport = await axios.get(WEATHER_URL, {
             params: {
@@ -64,6 +75,8 @@ app.post("/weather-report", async (req, res) => {
 
         const weatherData = weatherReport.data;
 
+        // Using axios to get 24 hour weather forecast, devided forecast by every 3, totaling 7 times
+
         const forecast = await axios.get(FORECAST_URL, {
             params:{
                 lat: cityData.data[0].lat,
@@ -76,6 +89,8 @@ app.post("/weather-report", async (req, res) => {
         })
 
         const forecastData = forecast.data.list;
+
+        // after getting future forecast data, I loop through the data and place the contents in an array
 
         const futureForecasts = [];
         for(let i = 0; i < 7; i++){
