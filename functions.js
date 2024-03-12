@@ -40,24 +40,53 @@ export function timeNormalizerNoOffSet(time){
 export function windDegInterpretator(deg){
     let windDirection;
 
-    if(deg >= 351 || deg <= 9){
-        windDirection = 'N';
-    } else if(deg >= 10 && deg <= 80){
-        windDirection = 'NE';
-    } else if(deg >= 81 && deg <= 100){
-        windDirection = 'E';
-    } else if(deg >= 101 && deg <= 170){
-        windDirection = 'SE';
-    } else if(deg >= 171 && deg <= 190){
-        windDirection = 'S';
-    } else if(deg >= 191 && deg <= 260){
-        windDirection = 'SW' ;
-    } else if(deg >= 261 && deg <= 280){
-        windDirection = 'W';
-    } else if(deg >= 281 && deg <= 350){
-        windDirection = 'NW';
-    } else {
-        windDirection = 'No wind';
+    // if(deg >= 351 || deg <= 9){
+    //     windDirection = 'N';
+    // } else if(deg >= 10 && deg <= 80){
+    //     windDirection = 'NE';
+    // } else if(deg >= 81 && deg <= 100){
+    //     windDirection = 'E';
+    // } else if(deg >= 101 && deg <= 170){
+    //     windDirection = 'SE';
+    // } else if(deg >= 171 && deg <= 190){
+    //     windDirection = 'S';
+    // } else if(deg >= 191 && deg <= 260){
+    //     windDirection = 'SW' ;
+    // } else if(deg >= 261 && deg <= 280){
+    //     windDirection = 'W';
+    // } else if(deg >= 281 && deg <= 350){
+    //     windDirection = 'NW';
+    // } else {
+    //     windDirection = 'No wind';
+    // }
+
+    switch(true){
+        case (deg >= 351 || deg <= 9):
+            windDirection = 'N';
+            break;
+        case (deg >= 10 && deg <= 80):
+            windDirection = 'NE';
+            break;
+        case (deg >= 81 && deg <= 100):
+            windDirection = 'E';
+            break;
+        case (deg >= 101 && deg <= 170):
+            windDirection = 'SE';
+            break;
+        case (deg >= 171 && deg <= 190):
+            windDirection = 'S';
+            break;
+        case (deg >= 191 && deg <= 260):
+            windDirection = 'SW';
+            break;
+        case (deg >= 261 && deg <= 280):
+            windDirection = 'W';
+            break;
+        case (deg >= 281 && deg <= 350):
+            windDirection = 'NW';
+            break;
+        default:
+            windDirection = 'No wind';
     }
 
     return windDirection;
